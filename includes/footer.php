@@ -11,7 +11,7 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h3><?php echo SITE_NAME; ?></h3>
-                    <p>Developpeur Junior passionner , creant des solutions web innovantes</p>
+                    <p>ingenieur en géotechnique et l'exploitation minière</p>
         
                 </div>
                 <div class="footer-section">

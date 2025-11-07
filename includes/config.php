@@ -3,12 +3,12 @@
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root');
 define('DB_PASS', '');
-define('DB_NAME', 'pro_for_you');
+define('DB_NAME', 'profil');
 
 // Configuration du site
-define('SITE_URL', 'http://localhost/pro_for_you');
-define('SITE_NAME', 'CHRIS WEB DISIGN');
-define('SITE_EMAIL', 'marcelochris98gmail.com');
+define('SITE_URL', 'http://localhost/profil');
+define('SITE_NAME', 'Wamba ING');
+define('SITE_EMAIL', 'arielsolefackwambagmail.com');
 
 // Connexion à la base de données
 try {
@@ -21,4 +21,5 @@ try {
 // Démarrer la session
 session_start();
 ?>
+
 

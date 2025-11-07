@@ -6,10 +6,10 @@
 }
 
 :root {
-    --primary-color: #2563eb;
-    --secondary-color: #1e40af;
-    --text-color: #1f2937;
-    --light-gray: #f3f4f6;
+    --primary-color: #a7734e;
+    --secondary-color: #2E8B57;
+    --text-color: #4682b4;
+    --light-gray: #D3D3D3;
     --white: #ffffff;
     --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -86,7 +86,7 @@ body {
 /* Hero Section */
 .hero {
     padding: 100px 0;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+     background: linear-gradient(135deg, #a4d1b8 0%, #0c4f47 100%);
     color: var(--white);
 }
 
@@ -267,7 +267,7 @@ body {
 
 /* Page Header */
 .page-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #a4d1b8 0%, #0c4f47 100%);
     color: var(--white);
     padding: 80px 0;
     text-align: center;

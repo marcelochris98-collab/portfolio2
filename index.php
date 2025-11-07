@@ -4,15 +4,15 @@ require_once 'includes/header.php';
 <section class="hero">
     <div class="container">
         <div class="hero-content">
-            <h1 class="hero-title">Bonjour, je suis   chris NGUEFAH<span class="highlight"> Développeur junior</span></h1>
-            <p class="hero-subtitle">Je transforme vos idées en solutions web performantes et élégantes</p>
+            <h1 class="hero-title">Bonjour, je suis   Ariel Wamba<span class="highlight"> ingenieur en géotechnique</span></h1>
+            <p class="hero-subtitle">motivé par l'innovation et le developpement durable, je suis pret à contribuer aux projets miniers au Cameroun et à l'international</p>
             <div class="hero-buttons">
                 <a href="<?php echo SITE_URL; ?>/portfolio.php" class="btn btn-primary">Voir mon travail</a>
                 <a href="<?php echo SITE_URL; ?>/contact.php" class="btn btn-secondary">Me contacter</a>
             </div>
         </div>
         <div class="hero-image">
-            <img src="img/profile.jpg" alt="Profile">
+            <img src="img/wam.jpg" alt="Profile">
         </div>
     </div>
 </section>
@@ -22,24 +22,68 @@ require_once 'includes/header.php';
         <h2 class="section-title">Mes Compétences</h2>
         <div class="skills-grid">
             <div class="skill-card">
-                <i class="fas fa-code"></i>
-                <h3>Front-End</h3>
-                <p>HTML5, CSS3, JavaScript, </p>
+                <i class="fas fa-mountain"></i>
+                <h3>géotechnique</h3>
+                <p><strong>réalisation d'essais en laboratoire et in situ</strong> <ul>
+                    <li>VBS,protor</li>
+                    <li>teneur en eau ,matière organique</li>
+                    <li>analyse granulométrique,poids spécifique</li>
+                    <li>Pénétromètre dynamique lourd</li>
+                </ul></p>
             </div>
             <div class="skill-card">
-                <i class="fas fa-server"></i>
-                <h3>Back-End</h3>
-                <p>PHP,  Python, MySQL,</p>
+                <i class="fas fa-toolbox"></i>
+                <h3>béton et matériaux</h3>
+                <p><strong>béton et matériaux</strong>
+                <ul>
+                    <li>Formulation et controle qualité bétons</li>
+                    <li>Formulation de briques locales</li>
+                </ul>
+            </p>
             </div>
             <div class="skill-card">
-                <i class="fas fa-mobile-alt"></i>
-                <h3>Responsive Design</h3>
-                <p>Design adaptatif pour tous les appareils</p>
+                <i class="fas fa-desktop"></i>
+                <h3>Familarité avec les logiciels</h3>
+                <p><strong>logiciels</strong>
+                <ul>
+                    <li><strong>ingénerie & DAO</strong></li>
+                    <OL>
+                        Revit,
+                        surfer
+                    </OL>
+                </ul>
+                 <ul>
+                    <li><strong>Cartographie & SIG</strong></li>
+                    <OL>
+                        QGIS,
+                        ArcGIS
+                    </OL>
+                </ul>
+                <ul>
+                    <li><strong>Analyse & programmation</strong></li>
+                    <OL>
+                        MATLAB,
+                        Arduino
+                    </OL>
+                </ul>
+                <ul>
+                    <li><strong>bureautque & graphisme</strong></li>
+                    <OL>
+                        Ms word, MS Excel,Adobe photoshop,illustrator
+                        ArcGIS
+                    </OL>
+                </ul>
+            </p>
             </div>
             <div class="skill-card">
-                <i class="fas fa-rocket"></i>
-                <h3>Performance</h3>
-                <p>Optimisation et bonnes pratiques</p>
+                <i class="fas fa-award"></i>
+               <h3>Qualités personnelles</h3>
+                <p> <ul>
+                    <li>Adaptabilité</li>
+                    <li>curiosité</li>
+                    <li>autonomie,esprit d'equipe et de synthèse</li>
+                    <li>rigueur</li>
+                </ul></p>
             </div>
         </div>
     </div>

@@ -4,7 +4,7 @@ require_once '../includes/functions.php';
 
 // Si déjà connecté, rediriger
 if (isLoggedIn()) {
-    header('Location: dashboard.php');
+    header('Location: index.php');
     exit;
 }
 
@@ -42,13 +42,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #a4d1b8 0%, #0c4f47 100%);
         }
         .login-box {
             background: white;
             padding: 3rem;
             border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 30px rgba(37, 36, 36, 0.3);
             width: 100%;
             max-width: 400px;
         }
