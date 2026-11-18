@@ -25,6 +25,16 @@ $pageTitle = $pageTitles[$currentPage] ?? (SITE_NAME . ' | ' . SITE_ROLE);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="<?php echo SITE_URL; ?>/css/style.css">
     <link rel="stylesheet" href="<?php echo SITE_URL; ?>/css/responsive.css">
+    <script>
+        (function() {
+            try {
+                var savedTheme = localStorage.getItem('portfolio_theme') || 'dark';
+                document.documentElement.setAttribute('data-theme', savedTheme);
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
+    </script>
 </head>
 <body>
     <div class="bg-grid-overlay" aria-hidden="true"></div>
@@ -81,6 +91,10 @@ $pageTitle = $pageTitles[$currentPage] ?? (SITE_NAME . ' | ' . SITE_ROLE);
                     <span class="availability-pill" title="Disponible pour missions et études géotechniques">
                         <span class="status-dot"></span> Disponible
                     </span>
+                    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Basculer entre le mode sombre et le mode clair" title="Mode sombre / Mode clair">
+                        <i class="fas fa-sun icon-sun" aria-hidden="true"></i>
+                        <i class="fas fa-moon icon-moon" aria-hidden="true"></i>
+                    </button>
                     <a href="<?php echo SITE_URL; ?>/contact.php" class="btn btn-primary btn-sm nav-cta-desktop">
                         Me contacter <i class="fas fa-arrow-up-right-from-square"></i>
                     </a>

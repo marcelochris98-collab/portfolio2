@@ -1,4 +1,21 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // 0. Bascule Mode Sombre / Mode Clair (avec sauvegarde localStorage)
+    const themeToggle = document.getElementById('themeToggle');
+    const rootHtml = document.documentElement;
+
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = rootHtml.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+            const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            rootHtml.setAttribute('data-theme', nextTheme);
+            try {
+                localStorage.setItem('portfolio_theme', nextTheme);
+            } catch (e) {
+                // Ignorer si localStorage est bloqué
+            }
+        });
+    }
+
     // 1. Navigation mobile (Hamburger)
     const hamburger = document.getElementById('hamburger');
     const navMenu = document.getElementById('navMenu');

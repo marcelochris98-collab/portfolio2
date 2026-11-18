@@ -49,6 +49,41 @@
     --transition-base: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* ==========================================================================
+   THÈME CLAIR (MODE CLAIR ÉPURÉ & BLEU TERNE ARDOISE)
+   ========================================================================== */
+[data-theme="light"] {
+    --bg-primary: #f4f7fa;
+    --bg-secondary: #eaeff5;
+    --bg-surface: #ffffff;
+    --bg-surface-elevated: #edf2f7;
+    --bg-glass: rgba(255, 255, 255, 0.88);
+
+    --blue-muted: #4a6b88;
+    --blue-muted-light: #3b5a75;
+    --blue-muted-bright: #2c4a63;
+    --blue-muted-dark: #334e68;
+    --blue-tint-bg: rgba(74, 107, 136, 0.1);
+    --blue-tint-strong: rgba(74, 107, 136, 0.18);
+
+    --text-primary: #151a22;
+    --text-secondary: #4a5568;
+    --text-muted: #64748b;
+
+    --border-subtle: rgba(74, 107, 136, 0.18);
+    --border-hover: rgba(74, 107, 136, 0.42);
+    --shadow-sm: 0 4px 16px rgba(15, 23, 42, 0.06);
+    --shadow-md: 0 14px 34px rgba(15, 23, 42, 0.11);
+    --shadow-glow: 0 10px 30px rgba(74, 107, 136, 0.16);
+
+    --success-bg: rgba(34, 139, 98, 0.12);
+    --success-border: rgba(34, 139, 98, 0.35);
+    --success-text: #146c43;
+    --danger-bg: rgba(200, 50, 50, 0.1);
+    --danger-border: rgba(200, 50, 50, 0.35);
+    --danger-text: #b02a37;
+}
+
 /* Reset & Base */
 *,
 *::before,
@@ -325,6 +360,61 @@ h1, h2, h3, h4 {
     background: #68b99a;
     box-shadow: 0 0 0 3px rgba(104, 185, 154, 0.2);
     animation: pulseDot 2.4s infinite ease-in-out;
+}
+
+/* Bouton de bascule Mode Sombre / Mode Clair */
+.theme-toggle {
+    position: relative;
+    width: 42px;
+    height: 42px;
+    border-radius: 11px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-primary);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    transition: all var(--transition-base);
+    overflow: hidden;
+}
+
+.theme-toggle:hover {
+    border-color: var(--blue-muted);
+    color: var(--blue-muted-light);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.theme-toggle .icon-sun,
+.theme-toggle .icon-moon {
+    position: absolute;
+    transition: transform 0.45s var(--ease-out-expo), opacity 0.35s ease;
+}
+
+/* Par défaut (Mode Sombre) : afficher le Soleil pour passer au clair */
+.theme-toggle .icon-sun {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+    color: #eab308;
+}
+
+.theme-toggle .icon-moon {
+    opacity: 0;
+    transform: rotate(90deg) scale(0.5);
+}
+
+/* En Mode Clair : afficher la Lune pour repasser au sombre */
+[data-theme="light"] .theme-toggle .icon-sun {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.5);
+}
+
+[data-theme="light"] .theme-toggle .icon-moon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+    color: var(--blue-muted);
 }
 
 @keyframes pulseDot {
@@ -2134,3 +2224,65 @@ h1, h2, h3, h4 {
     padding: 2rem;
     color: var(--text-muted);
 }
+
+/* ==========================================================================
+   AJUSTEMENTS SPÉCIFIQUES AU MODE CLAIR ([data-theme="light"])
+   ========================================================================== */
+[data-theme="light"] .header {
+    background: rgba(244, 247, 250, 0.85);
+}
+
+[data-theme="light"] .header.scrolled {
+    background: rgba(255, 255, 255, 0.96);
+}
+
+[data-theme="light"] .nav-menu {
+    background: rgba(234, 239, 245, 0.85);
+}
+
+[data-theme="light"] .text-gradient {
+    background: linear-gradient(135deg, #151a22 0%, var(--blue-muted) 60%, var(--blue-muted-light) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+[data-theme="light"] .floating-badge {
+    background: rgba(255, 255, 255, 0.95);
+}
+
+[data-theme="light"] .portfolio-badge {
+    background: rgba(255, 255, 255, 0.92);
+    color: var(--blue-muted-dark);
+}
+
+[data-theme="light"] .portfolio-year {
+    background: rgba(255, 255, 255, 0.92);
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .cta-box {
+    background: linear-gradient(135deg, #ffffff 0%, #e6eef6 100%);
+}
+
+[data-theme="light"] .footer {
+    background: #141922;
+    color: #9aa7b8;
+}
+
+[data-theme="light"] .footer-section h3,
+[data-theme="light"] .footer .logo-text strong {
+    color: #edf2f7;
+}
+
+[data-theme="light"] .footer .social-links a {
+    background: #1e242f;
+    color: #9aa7b8;
+    border-color: rgba(130, 163, 191, 0.18);
+}
+
+[data-theme="light"] .footer .social-links a:hover {
+    background: var(--blue-muted);
+    color: #ffffff;
+}
+
