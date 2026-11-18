@@ -21,16 +21,15 @@ if ($dbConnected && $pdo) {
         <div class="hero-content" data-reveal="fade-up">
             <div class="hero-badge">
                 <i class="fas fa-compass-drafting"></i>
-                <span>Ingénierie Géotechnique &amp; Exploitation Minière</span>
+                <span>Ariel Wamba • Ingénieur Géotechnicien &amp; Minier</span>
             </div>
 
             <h1 class="hero-title">
-                Bonjour, je suis <span class="text-gradient">Ariel Wamba</span>,<br>
-                Ingénieur Géotechnicien.
+                Études Géotechniques, Contrôle Matériaux &amp; <span class="text-gradient">Ingénierie Minière.</span>
             </h1>
 
             <p class="hero-subtitle">
-                Spécialisé dans la mécanique des sols et des roches, le contrôle qualité des matériaux et la modélisation de gisements. J'accompagne les projets miniers et d'infrastructures de génie civil au Cameroun et à l'international avec rigueur et précision.
+                De la caractérisation mécanique des sols et des roches jusqu'au dimensionnement d'ouvrages et à la modélisation 3D de gisements, j'accompagne les projets de génie civil et d'exploitation minière avec rigueur scientifique et exigence terrain.
             </p>
 
             <div class="hero-buttons">
