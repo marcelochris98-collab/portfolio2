@@ -8,6 +8,13 @@ body {
     overflow-x: hidden;
 }
 
+/* Écrans moyens (<= 1240px) : masquer le badge "Disponible" pour laisser respirer la barre de navigation */
+@media (max-width: 1240px) {
+    .availability-pill {
+        display: none;
+    }
+}
+
 /* Tablettes & Écrans intermédiaires (<= 1024px) */
 @media (max-width: 1024px) {
     .container {
@@ -88,8 +95,8 @@ body {
     }
 }
 
-/* Tablettes portrait & Grands smartphones (<= 820px) */
-@media (max-width: 820px) {
+/* Tablettes portrait & Grands smartphones (<= 960px) */
+@media (max-width: 960px) {
     .navbar {
         padding: 0.75rem 0;
     }

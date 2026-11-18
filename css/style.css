@@ -251,20 +251,22 @@ h1, h2, h3, h4 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1rem;
 }
 
 .logo {
     display: inline-flex;
     align-items: center;
-    gap: 0.85rem;
+    gap: 0.75rem;
     text-decoration: none;
     color: var(--text-primary);
+    flex-shrink: 0;
 }
 
 .logo-mark {
     width: 42px;
     height: 42px;
+    flex-shrink: 0;
     border-radius: 11px;
     background: linear-gradient(145deg, var(--blue-muted) 0%, var(--blue-muted-dark) 100%);
     color: var(--white);
@@ -283,41 +285,47 @@ h1, h2, h3, h4 {
 .logo-text {
     display: flex;
     flex-direction: column;
-    line-height: 1.2;
+    justify-content: center;
+    line-height: 1.22;
+    white-space: nowrap;
 }
 
 .logo-text strong {
-    font-size: 1.08rem;
+    font-size: 1.06rem;
     font-weight: 700;
     letter-spacing: -0.01em;
+    white-space: nowrap;
 }
 
 .logo-text small {
     font-size: 0.74rem;
     color: var(--blue-muted-light);
     font-weight: 500;
+    white-space: nowrap;
 }
 
 .nav-menu {
     display: flex;
     align-items: center;
     list-style: none;
-    gap: 0.4rem;
+    gap: 0.25rem;
     background: rgba(30, 36, 47, 0.65);
-    padding: 0.35rem;
+    padding: 0.32rem;
     border-radius: var(--radius-pill);
     border: 1px solid var(--border-subtle);
+    flex-shrink: 0;
 }
 
 .nav-menu a {
     display: inline-block;
     text-decoration: none;
     color: var(--text-secondary);
-    font-size: 0.92rem;
+    font-size: 0.9rem;
     font-weight: 500;
-    padding: 0.48rem 1.05rem;
+    padding: 0.45rem 0.92rem;
     border-radius: var(--radius-pill);
     transition: all 0.25s ease;
+    white-space: nowrap;
 }
 
 .nav-menu a:hover {
@@ -338,7 +346,8 @@ h1, h2, h3, h4 {
 .nav-actions {
     display: flex;
     align-items: center;
-    gap: 0.85rem;
+    gap: 0.6rem;
+    flex-shrink: 0;
 }
 
 .availability-pill {
