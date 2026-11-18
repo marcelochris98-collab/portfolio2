@@ -221,10 +221,10 @@ if ($dbConnected && $pdo) {
                                         <td>
                                             <div class="admin-actions">
                                                 <a href="?edit=<?php echo (int)$proj['id']; ?>" class="btn btn-secondary btn-sm" title="Modifier">
-                                                    <i class="fas fa-pen"></i>
+                                                    <i class="fas fa-pen"></i> <span>Modifier</span>
                                                 </a>
                                                 <a href="?delete=<?php echo (int)$proj['id']; ?>" class="btn btn-danger btn-sm" title="Supprimer" onclick="return confirm('Supprimer cette réalisation ?');">
-                                                    <i class="fas fa-trash"></i>
+                                                    <i class="fas fa-trash"></i> <span>Supprimer</span>
                                                 </a>
                                             </div>
                                         </td>

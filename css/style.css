@@ -2137,7 +2137,7 @@ h1, h2, h3, h4 {
 
 .admin-grid {
     display: grid;
-    grid-template-columns: 1fr 1.35fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
     gap: 2rem;
     align-items: start;
 }
@@ -2147,6 +2147,9 @@ h1, h2, h3, h4 {
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-md);
     padding: 2rem;
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
 }
 
 .admin-panel-card h2 {
