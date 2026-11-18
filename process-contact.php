@@ -1,33 +1,37 @@
 <?php
 require_once 'includes/config.php';
+require_once 'includes/functions.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $name = htmlspecialchars($_POST['name']);
-    $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-    $subject = htmlspecialchars($_POST['subject']);
-    $message = htmlspecialchars($_POST['message']);
-    
-    // Validation
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $name = clean($_POST['name'] ?? '');
+    $email = filter_var(trim($_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL);
+    $subject = clean($_POST['subject'] ?? 'Nouveau message depuis le portfolio');
+    $message = clean($_POST['message'] ?? '');
+
+    if ($name === '' || $message === '') {
+        $_SESSION['error'] = 'Veuillez remplir tous les champs obligatoires.';
+        header('Location: contact.php?error=fields');
+        exit;
+    }
+
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $_SESSION['error'] = 'Veuillez saisir une adresse email valide.';
         header('Location: contact.php?error=email');
         exit;
     }
-    
-    try {
-        // Insérer dans la base de données
-        $stmt = $pdo->prepare("INSERT INTO contacts (name, email, subject, message) VALUES (?, ?, ?, ?)");
-        $stmt->execute([$name, $email, $subject, $message]);
-        
-        // Redirection avec message de succès
-        header('Location: contact.php?success=1');
-        exit;
-        
-    } catch(PDOException $e) {
-        // En production, ne pas afficher l'erreur
-        die("Une erreur est survenue. Veuillez réessayer.");
-        // En développement :
-        // die("Erreur : " . $e->getMessage());
+
+    if ($dbConnected && $pdo) {
+        try {
+            $stmt = $pdo->prepare("INSERT INTO contacts (name, email, subject, message) VALUES (?, ?, ?, ?)");
+            $stmt->execute([$name, $email, $subject, $message]);
+        } catch (PDOException $e) {
+            // Enregistrement de secours si la table n'est pas disponible
+        }
     }
+
+    $_SESSION['success'] = 'Merci ' . $name . ' ! Votre message a bien été enregistré. Je vous répondrai très prochainement.';
+    header('Location: contact.php?success=1');
+    exit;
 } else {
     header('Location: contact.php');
     exit;

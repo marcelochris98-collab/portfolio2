@@ -3,144 +3,113 @@ require_once '../includes/config.php';
 require_once '../includes/functions.php';
 requireLogin();
 
-// Statistiques
-$totalProjects = $pdo->query("SELECT COUNT(*) FROM projects")->fetchColumn();
-$totalContacts = $pdo->query("SELECT COUNT(*) FROM contacts")->fetchColumn();
-$recentContacts = $pdo->query("SELECT * FROM contacts ORDER BY created_at DESC LIMIT 5")->fetchAll(PDO::FETCH_ASSOC);
+$totalProjects = count($defaultProjects);
+$totalContacts = 0;
+$recentContacts = [];
+
+if ($dbConnected && $pdo) {
+    try {
+        $totalProjects = (int)$pdo->query("SELECT COUNT(*) FROM projects")->fetchColumn();
+        $totalContacts = (int)$pdo->query("SELECT COUNT(*) FROM contacts")->fetchColumn();
+        $recentContacts = $pdo->query("SELECT * FROM contacts ORDER BY created_at DESC LIMIT 8")->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        // Fallback gracieux
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Admin</title>
+    <title>Tableau de bord Admin | <?php echo SITE_NAME; ?></title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="<?php echo SITE_URL; ?>/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        .admin-header {
-            background: var(--primary-color);
-            color: white;
-            padding: 1rem 0;
-        }
-        .admin-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .admin-nav a {
-            color: white;
-            margin-left: 1rem;
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            transition: background 0.3s;
-        }
-        .admin-nav a:hover {
-            background: rgba(255,255,255,0.2);
-        }
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-        .stat-box {
-            background: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: var(--shadow);
-            text-align: center;
-            transition: transform 0.3s;
-        }
-        .stat-box:hover {
-            transform: translateY(-5px);
-        }
-        .stat-box i {
-            font-size: 3rem;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-        .stat-box h3 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            color: var(--primary-color);
-        }
-        .recent-contacts {
-            background: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: var(--shadow);
-            margin-top: 2rem;
-        }
-        .contact-item {
-            border-bottom: 1px solid #eee;
-            padding: 1rem 0;
-        }
-        .contact-item:last-child {
-            border-bottom: none;
-        }
-        .contact-item strong {
-            color: var(--primary-color);
-        }
-        .contact-meta {
-            font-size: 0.9rem;
-            color: #666;
-            margin-top: 0.5rem;
-        }
-    </style>
 </head>
-<body>
-    <header class="admin-header">
-        <div class="container">
-            <nav class="admin-nav">
-                <h2>📊 Dashboard Admin</h2>
-                <div>
-                    <a href="manage-projects.php"><i class="fas fa-folder"></i> Projets</a>
-                    <a href="<?php echo SITE_URL; ?>" target="_blank"><i class="fas fa-external-link-alt"></i> Voir le site</a>
-                    <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+<body class="admin-body">
+    <header class="header">
+        <nav class="navbar">
+            <div class="container nav-container">
+                <a href="dashboard.php" class="logo">
+                    <span class="logo-mark"><i class="fas fa-gauge-high"></i></span>
+                    <span class="logo-text">
+                        <strong>Tableau de Bord</strong>
+                        <small>Administration <?php echo SITE_NAME; ?></small>
+                    </span>
+                </a>
+                <div class="nav-actions">
+                    <a href="manage-project.php" class="btn btn-secondary btn-sm"><i class="fas fa-folder-open"></i> Gérer les projets</a>
+                    <a href="<?php echo SITE_URL; ?>/index.php" target="_blank" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-up-right-from-square"></i> Voir le site</a>
+                    <a href="logout.php" class="btn btn-primary btn-sm"><i class="fas fa-power-off"></i> Déconnexion</a>
                 </div>
-            </nav>
-        </div>
+            </div>
+        </nav>
     </header>
 
-    <main style="padding: 3rem 0; background: var(--light-gray); min-height: calc(100vh - 70px);">
+    <main class="section-padding">
         <div class="container">
-            <h1>Bienvenue, <?php echo htmlspecialchars($_SESSION['admin_username']); ?> ! 👋</h1>
-            
-            <div class="dashboard-grid">
-                <div class="stat-box">
-                    <i class="fas fa-project-diagram"></i>
-                    <h3><?php echo $totalProjects; ?></h3>
-                    <p>Projets Totaux</p>
-                    <a href="manage-projects.php" class="btn btn-primary" style="margin-top: 1rem; font-size: 0.9rem;">Gérer</a>
-                </div>
-                <div class="stat-box">
-                    <i class="fas fa-envelope"></i>
-                    <h3><?php echo $totalContacts; ?></h3>
-                    <p>Messages Reçus</p>
-                </div>
-                <div class="stat-box">
-                    <i class="fas fa-clock"></i>
-                    <h3><?php echo date('H:i'); ?></h3>
-                    <p><?php echo date('d/m/Y'); ?></p>
+            <div class="section-header-flex">
+                <div>
+                    <span class="section-tag">Espace Administrateur</span>
+                    <h1 class="section-title">Bienvenue, <?php echo htmlspecialchars($_SESSION['admin_username'] ?? 'Admin'); ?></h1>
                 </div>
             </div>
 
-            <div class="recent-contacts">
-                <h2><i class="fas fa-comments"></i> Messages Récents</h2>
+            <div class="skills-grid" style="margin-bottom: 3rem;">
+                <div class="skill-card">
+                    <div class="skill-card-header">
+                        <div class="skill-icon"><i class="fas fa-diagram-project"></i></div>
+                        <span class="skill-index">PROJETS</span>
+                    </div>
+                    <h3 style="font-size: 2.5rem; margin-bottom: 0.4rem;"><?php echo $totalProjects; ?></h3>
+                    <p class="skill-desc">Projets et études publiés dans le portfolio.</p>
+                    <a href="manage-project.php" class="btn btn-primary btn-sm">Gérer le catalogue <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-card-header">
+                        <div class="skill-icon"><i class="fas fa-envelope-open-text"></i></div>
+                        <span class="skill-index">MESSAGES</span>
+                    </div>
+                    <h3 style="font-size: 2.5rem; margin-bottom: 0.4rem;"><?php echo $totalContacts; ?></h3>
+                    <p class="skill-desc">Demandes de contact et devis reçus via le formulaire.</p>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-card-header">
+                        <div class="skill-icon"><i class="fas fa-server"></i></div>
+                        <span class="skill-index">SYSTÈME</span>
+                    </div>
+                    <h3 style="font-size: 1.5rem; margin-bottom: 0.4rem;"><?php echo $dbConnected ? 'Base SQL Active (' . htmlspecialchars($dbEngine ?? 'PDO') . ')' : 'Mode Autonome'; ?></h3>
+                    <p class="skill-desc">Date serveur : <?php echo date('d/m/Y H:i'); ?></p>
+                </div>
+            </div>
+
+            <div class="admin-panel-card">
+                <h2><i class="fas fa-inbox"></i> Derniers Messages Reçus</h2>
                 <?php if (count($recentContacts) > 0): ?>
-                    <?php foreach ($recentContacts as $contact): ?>
-                        <div class="contact-item">
-                            <strong><?php echo htmlspecialchars($contact['name']); ?></strong>
-                            <span style="color: #666;"> - <?php echo htmlspecialchars($contact['email']); ?></span>
-                            <p style="margin: 0.5rem 0;"><?php echo htmlspecialchars(substr($contact['message'], 0, 100)); ?>...</p>
-                            <div class="contact-meta">
-                                <i class="fas fa-calendar"></i> <?php echo date('d/m/Y H:i', strtotime($contact['created_at'])); ?>
+                    <div class="admin-messages-list">
+                        <?php foreach ($recentContacts as $contact): ?>
+                            <div class="admin-message-item">
+                                <div class="message-top">
+                                    <div>
+                                        <strong><?php echo htmlspecialchars($contact['name']); ?></strong>
+                                        <span class="message-email">&lt;<?php echo htmlspecialchars($contact['email']); ?>&gt;</span>
+                                    </div>
+                                    <span class="message-date"><i class="fas fa-clock"></i> <?php echo date('d/m/Y à H:i', strtotime($contact['created_at'])); ?></span>
+                                </div>
+                                <?php if (!empty($contact['subject'])): ?>
+                                    <div class="message-subject">Objet : <?php echo htmlspecialchars($contact['subject']); ?></div>
+                                <?php endif; ?>
+                                <p class="message-body"><?php echo nl2br(htmlspecialchars($contact['message'])); ?></p>
                             </div>
-                        </div>
-                    <?php endforeach; ?>
+                        <?php endforeach; ?>
+                    </div>
                 <?php else: ?>
-                    <p style="text-align: center; color: #666; padding: 2rem;">Aucun message pour le moment</p>
+                    <p class="empty-state">Aucun message enregistré pour le moment.</p>
                 <?php endif; ?>
             </div>
         </div>

@@ -14,7 +14,7 @@ function requireLogin() {
 
 // Nettoyer les données
 function clean($data) {
-    return htmlspecialchars(strip_tags(trim($data)));
+    return htmlspecialchars(strip_tags(trim((string)$data)), ENT_QUOTES, 'UTF-8');
 }
 
 // Générer un token CSRF
@@ -27,32 +27,50 @@ function generateCSRFToken() {
 
 // Vérifier le token CSRF
 function verifyCSRFToken($token) {
-    return isset($_SESSION['csrf_token']) && hash_equals($_SESSION['csrf_token'], $token);
+    return isset($_SESSION['csrf_token']) && is_string($token) && hash_equals($_SESSION['csrf_token'], $token);
+}
+
+// Résoudre l'URL d'une image de projet avec fallback intelligent
+function getProjectImageUrl($imageName) {
+    $cleanName = basename((string)$imageName);
+    $rootDir = dirname(__DIR__);
+    
+    if ($cleanName !== '') {
+        if (file_exists($rootDir . '/img/projects/' . $cleanName)) {
+            return SITE_URL . '/img/projects/' . $cleanName;
+        }
+        if (file_exists($rootDir . '/images/projects/' . $cleanName)) {
+            return SITE_URL . '/images/projects/' . $cleanName;
+        }
+    }
+    return SITE_URL . '/img/projects/geo-foundation.svg';
 }
 
 // Upload d'image
-function uploadImage($file, $targetDir = '../images/projects/') {
-    $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+function uploadImage($file, $targetDir = '../img/projects/') {
+    $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml'];
     $maxSize = 5 * 1024 * 1024; // 5MB
     
-    if (!in_array($file['type'], $allowedTypes)) {
-        return ['success' => false, 'message' => 'Type de fichier non autorisé'];
+    if (!isset($file['type']) || !in_array($file['type'], $allowedTypes)) {
+        return ['success' => false, 'message' => 'Type de fichier non autorisé (JPG, PNG, WEBP, SVG uniquement)'];
     }
     
     if ($file['size'] > $maxSize) {
         return ['success' => false, 'message' => 'Fichier trop volumineux (max 5MB)'];
     }
     
-    $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
-    $filename = uniqid() . '_' . time() . '.' . $extension;
-    $targetPath = $targetDir . $filename;
+    if (!is_dir($targetDir)) {
+        mkdir($targetDir, 0775, true);
+    }
+    
+    $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+    $filename = 'proj_' . uniqid() . '_' . time() . '.' . $extension;
+    $targetPath = rtrim($targetDir, '/') . '/' . $filename;
     
     if (move_uploaded_file($file['tmp_name'], $targetPath)) {
         return ['success' => true, 'filename' => $filename];
     }
     
-    return ['success' => false, 'message' => 'Erreur lors de l\'upload'];
+    return ['success' => false, 'message' => 'Erreur lors de l\'upload du fichier'];
 }
 ?>
-
-

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg6" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#13171f"/>
+      <stop offset="100%" stop-color="#1b2330"/>
+    </linearGradient>
+    <pattern id="grid6" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#5b7c99" stroke-width="0.6" stroke-opacity="0.16"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="500" fill="url(#bg6)"/>
+  <rect width="800" height="500" fill="url(#grid6)"/>
+  <!-- Sensor & Signal Waveform -->
+  <rect x="110" y="150" width="200" height="200" rx="14" fill="#1a222d" stroke="#85a6c4" stroke-width="2"/>
+  <circle cx="210" cy="250" r="55" fill="#5b7c99" fill-opacity="0.2" stroke="#9cc0de" stroke-width="2"/>
+  <circle cx="210" cy="250" r="22" fill="#8cb0ce"/>
+  <path d="M 350 250 L 415 250 L 435 175 L 460 320 L 485 195 L 510 290 L 535 235 L 560 250 L 690 250" fill="none" stroke="#9cc0de" stroke-width="3"/>
+  <text x="110" y="105" fill="#9bb8d3" font-family="monospace" font-size="13" letter-spacing="1">SYSTÈME D'ACQUISITION CAPTEURS &amp; TÉLÉMÉTRIE MINIÈRE</text>
+  <text x="355" y="370" fill="#799bb8" font-family="monospace" font-size="12">ARDUINO / MATLAB • DÉTECTION GAZ &amp; FUMÉE TEMPS RÉEL</text>
+</svg>
