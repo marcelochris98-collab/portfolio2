@@ -2,8 +2,10 @@
 require_once '../includes/config.php';
 require_once '../includes/functions.php';
 
+$redirectTarget = (isset($_GET['redirect']) && $_GET['redirect'] === 'manage-project.php') ? 'manage-project.php' : 'manage-project.php';
+
 if (isLoggedIn()) {
-    header('Location: dashboard.php');
+    header('Location: ' . $redirectTarget);
     exit;
 }
 
@@ -12,6 +14,7 @@ $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = clean($_POST['username'] ?? '');
     $password = $_POST['password'] ?? '';
+    $postRedirect = (isset($_POST['redirect']) && $_POST['redirect'] === 'dashboard.php') ? 'dashboard.php' : 'manage-project.php';
 
     $authenticated = false;
 
@@ -40,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if ($authenticated) {
-        header('Location: dashboard.php');
+        header('Location: ' . $postRedirect);
         exit;
     } else {
         $error = 'Identifiants incorrects.';
@@ -68,8 +71,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="admin-login-card">
             <div class="admin-login-header">
                 <span class="logo-mark"><i class="fas fa-shield-halved"></i></span>
-                <h1>Administration</h1>
-                <p>Espace de gestion du portfolio d'<?php echo SITE_NAME; ?></p>
+                <h1>Connexion Admin</h1>
+                <p>Publiez vos réalisations et photos en direct — <?php echo SITE_NAME; ?></p>
             </div>
 
             <?php if ($error): ?>
@@ -80,6 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php endif; ?>
 
             <form method="POST" class="admin-login-form">
+                <input type="hidden" name="redirect" value="<?php echo htmlspecialchars($redirectTarget); ?>">
                 <div class="form-group">
                     <label for="username">Identifiant</label>
                     <input type="text" id="username" name="username" placeholder="admin" required autofocus>
@@ -89,13 +93,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="password" id="password" name="password" placeholder="••••••••" required>
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">
-                    <span>Se connecter</span>
+                    <span>Se connecter et publier</span>
                     <i class="fas fa-arrow-right-to-bracket"></i>
                 </button>
             </form>
 
             <div class="admin-login-footer">
-                <a href="<?php echo SITE_URL; ?>/index.php"><i class="fas fa-arrow-left"></i> Retour au portfolio</a>
+                <a href="<?php echo SITE_URL; ?>/index.php"><i class="fas fa-arrow-left"></i> Retour à l'accueil du site</a>
             </div>
         </div>
     </div>

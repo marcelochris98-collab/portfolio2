@@ -7,7 +7,7 @@ $message = '';
 $error = '';
 
 if ($dbConnected && $pdo) {
-    // Supprimer un projet
+    // Supprimer une réalisation
     if (isset($_GET['delete'])) {
         $id = intval($_GET['delete']);
         $stmt = $pdo->prepare("SELECT image FROM projects WHERE id = ?");
@@ -24,11 +24,11 @@ if ($dbConnected && $pdo) {
 
         $stmt = $pdo->prepare("DELETE FROM projects WHERE id = ?");
         if ($stmt->execute([$id])) {
-            $message = 'Le projet a été supprimé avec succès.';
+            $message = 'La réalisation a été supprimée avec succès.';
         }
     }
 
-    // Ajouter ou modifier un projet
+    // Ajouter ou modifier une réalisation
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!verifyCSRFToken($_POST['csrf_token'] ?? '')) {
             $error = 'Jeton de sécurité CSRF invalide.';
@@ -58,12 +58,12 @@ if ($dbConnected && $pdo) {
                         $stmt = $pdo->prepare("UPDATE projects SET title = ?, description = ?, technologies = ?, url = ? WHERE id = ?");
                         $stmt->execute([$title, $description, $technologies, $url, $id]);
                     }
-                    $message = 'Le projet a été mis à jour avec succès.';
+                    $message = 'La réalisation a été mise à jour avec succès.';
                 } else {
                     $finalImage = $imageName !== '' ? $imageName : 'geo-foundation.svg';
                     $stmt = $pdo->prepare("INSERT INTO projects (title, description, technologies, url, image) VALUES (?, ?, ?, ?, ?)");
                     $stmt->execute([$title, $description, $technologies, $url, $finalImage]);
-                    $message = 'Le nouveau projet a été ajouté avec succès.';
+                    $message = 'Votre nouvelle réalisation et sa photo sont maintenant en ligne !';
                 }
             }
         }
@@ -92,7 +92,7 @@ if ($dbConnected && $pdo) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion des Projets | <?php echo SITE_NAME; ?></title>
+    <title>Publier une Réalisation | <?php echo SITE_NAME; ?></title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -107,15 +107,15 @@ if ($dbConnected && $pdo) {
         <nav class="navbar">
             <div class="container nav-container">
                 <a href="dashboard.php" class="logo">
-                    <span class="logo-mark"><i class="fas fa-folder-tree"></i></span>
+                    <span class="logo-mark"><i class="fas fa-cloud-arrow-up"></i></span>
                     <span class="logo-text">
-                        <strong>Gestion des Projets</strong>
-                        <small>Administration <?php echo SITE_NAME; ?></small>
+                        <strong>Publication Rapide</strong>
+                        <small>Réalisations &amp; Photos — <?php echo SITE_NAME; ?></small>
                     </span>
                 </a>
                 <div class="nav-actions">
                     <a href="dashboard.php" class="btn btn-secondary btn-sm"><i class="fas fa-gauge-high"></i> Dashboard</a>
-                    <a href="<?php echo SITE_URL; ?>/portfolio.php" target="_blank" class="btn btn-secondary btn-sm"><i class="fas fa-eye"></i> Voir le Portfolio</a>
+                    <a href="<?php echo SITE_URL; ?>/portfolio.php" class="btn btn-secondary btn-sm"><i class="fas fa-eye"></i> Voir les Réalisations</a>
                     <a href="logout.php" class="btn btn-primary btn-sm"><i class="fas fa-power-off"></i> Déconnexion</a>
                 </div>
             </div>
@@ -125,7 +125,15 @@ if ($dbConnected && $pdo) {
     <main class="section-padding">
         <div class="container">
             <?php if ($message): ?>
-                <div class="alert alert-success"><i class="fas fa-circle-check"></i> <span><?php echo htmlspecialchars($message); ?></span></div>
+                <div class="alert alert-success" style="justify-content: space-between; flex-wrap: wrap;">
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <i class="fas fa-circle-check"></i>
+                        <span><?php echo htmlspecialchars($message); ?></span>
+                    </div>
+                    <a href="<?php echo SITE_URL; ?>/portfolio.php" class="btn btn-primary btn-sm">
+                        <i class="fas fa-eye"></i> Voir sur la page Réalisations
+                    </a>
+                </div>
             <?php endif; ?>
             <?php if ($error): ?>
                 <div class="alert alert-error"><i class="fas fa-triangle-exclamation"></i> <span><?php echo htmlspecialchars($error); ?></span></div>
@@ -133,7 +141,10 @@ if ($dbConnected && $pdo) {
 
             <div class="admin-grid">
                 <div class="admin-panel-card">
-                    <h2><?php echo $editProject ? 'Modifier le Projet' : 'Ajouter un Projet'; ?></h2>
+                    <h2>
+                        <i class="fas fa-camera-retro" style="color: var(--blue-muted-light); margin-right: 0.4rem;"></i>
+                        <?php echo $editProject ? 'Modifier la Réalisation' : 'Publier une Réalisation & Photo'; ?>
+                    </h2>
                     <form method="POST" enctype="multipart/form-data" class="contact-form" style="padding: 0; border: none; background: transparent; box-shadow: none;">
                         <input type="hidden" name="csrf_token" value="<?php echo generateCSRFToken(); ?>">
                         <?php if ($editProject): ?>
@@ -141,33 +152,39 @@ if ($dbConnected && $pdo) {
                         <?php endif; ?>
 
                         <div class="form-group">
-                            <label>Titre de l'étude / du projet *</label>
-                            <input type="text" name="title" value="<?php echo $editProject ? htmlspecialchars($editProject['title']) : ''; ?>" placeholder="Ex. Campagne Géotechnique & Essais PDL" required>
+                            <label for="imageUpload"><i class="fas fa-image"></i> Photo du chantier / de l'étude (JPG, PNG, WEBP)</label>
+                            <input type="file" id="imageUpload" name="image" accept="image/*" style="cursor: pointer;">
+                            <div id="imagePreviewWrap" style="margin-top: 0.75rem; <?php echo ($editProject && !empty($editProject['image'])) ? '' : 'display: none;'; ?>">
+                                <img id="imagePreview"
+                                     src="<?php echo ($editProject && !empty($editProject['image'])) ? htmlspecialchars(getProjectImageUrl($editProject['image'])) : ''; ?>"
+                                     alt="Aperçu de la photo"
+                                     style="width: 100%; max-height: 200px; object-fit: cover; border-radius: 10px; border: 1px solid var(--border-subtle);">
+                            </div>
                         </div>
 
                         <div class="form-group">
-                            <label>Description technique *</label>
-                            <textarea name="description" rows="4" required placeholder="Détaillez les essais réalisés, la méthodologie et les résultats..."><?php echo $editProject ? htmlspecialchars($editProject['description']) : ''; ?></textarea>
+                            <label>Titre de la réalisation *</label>
+                            <input type="text" name="title" value="<?php echo $editProject ? htmlspecialchars($editProject['title']) : ''; ?>" placeholder="Ex. Essais au Pénétromètre Dynamique à Douala" required>
                         </div>
 
                         <div class="form-group">
-                            <label>Outils, Normes &amp; Technologies (séparés par des virgules) *</label>
+                            <label>Description des travaux réalisés *</label>
+                            <textarea name="description" rows="4" required placeholder="Décrivez brièvement l'étude, les essais de laboratoire ou le suivi de chantier..."><?php echo $editProject ? htmlspecialchars($editProject['description']) : ''; ?></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Outils, Essais &amp; Logiciels utilisés (séparés par des virgules) *</label>
                             <input type="text" name="technologies" value="<?php echo $editProject ? htmlspecialchars($editProject['technologies']) : ''; ?>" placeholder="Pénétromètre PDL, Essai Proctor, VBS, QGIS" required>
                         </div>
 
                         <div class="form-group">
-                            <label>Lien ou référence (optionnel)</label>
+                            <label>Lien externe ou contact (optionnel)</label>
                             <input type="text" name="url" value="<?php echo $editProject ? htmlspecialchars($editProject['url']) : ''; ?>" placeholder="contact.php?subject=Etude">
                         </div>
 
-                        <div class="form-group">
-                            <label>Illustration (JPG, PNG, WEBP, SVG)</label>
-                            <input type="file" name="image" accept="image/*">
-                        </div>
-
-                        <div style="display: flex; gap: 0.75rem;">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-floppy-disk"></i> <?php echo $editProject ? 'Enregistrer' : 'Publier le projet'; ?>
+                        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                            <button type="submit" class="btn btn-primary" style="flex: 1;">
+                                <i class="fas fa-cloud-arrow-up"></i> <?php echo $editProject ? 'Enregistrer les modifications' : 'Mettre en ligne maintenant'; ?>
                             </button>
                             <?php if ($editProject): ?>
                                 <a href="manage-project.php" class="btn btn-secondary">Annuler</a>
@@ -177,14 +194,14 @@ if ($dbConnected && $pdo) {
                 </div>
 
                 <div class="admin-panel-card">
-                    <h2>Catalogue Actuel (<?php echo count($projects); ?>)</h2>
+                    <h2>Réalisations en ligne (<?php echo count($projects); ?>)</h2>
                     <div class="admin-table-wrap">
                         <table class="admin-table">
                             <thead>
                                 <tr>
-                                    <th>Aperçu</th>
-                                    <th>Projet</th>
-                                    <th>Outils / Méthodes</th>
+                                    <th>Photo</th>
+                                    <th>Réalisation</th>
+                                    <th>Outils / Essais</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -205,7 +222,7 @@ if ($dbConnected && $pdo) {
                                                 <a href="?edit=<?php echo (int)$proj['id']; ?>" class="btn btn-secondary btn-sm" title="Modifier">
                                                     <i class="fas fa-pen"></i>
                                                 </a>
-                                                <a href="?delete=<?php echo (int)$proj['id']; ?>" class="btn btn-danger btn-sm" title="Supprimer" onclick="return confirm('Supprimer ce projet ?');">
+                                                <a href="?delete=<?php echo (int)$proj['id']; ?>" class="btn btn-danger btn-sm" title="Supprimer" onclick="return confirm('Supprimer cette réalisation ?');">
                                                     <i class="fas fa-trash"></i>
                                                 </a>
                                             </div>
@@ -219,5 +236,24 @@ if ($dbConnected && $pdo) {
             </div>
         </div>
     </main>
+
+    <script>
+        const imageUpload = document.getElementById('imageUpload');
+        const imagePreview = document.getElementById('imagePreview');
+        const imagePreviewWrap = document.getElementById('imagePreviewWrap');
+        if (imageUpload && imagePreview && imagePreviewWrap) {
+            imageUpload.addEventListener('change', (e) => {
+                const file = e.target.files && e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (ev) => {
+                        imagePreview.src = ev.target.result;
+                        imagePreviewWrap.style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+    </script>
 </body>
 </html>

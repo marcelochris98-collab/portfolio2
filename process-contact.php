@@ -5,7 +5,7 @@ require_once 'includes/functions.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = clean($_POST['name'] ?? '');
     $email = filter_var(trim($_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL);
-    $subject = clean($_POST['subject'] ?? 'Nouveau message depuis le portfolio');
+    $subject = clean($_POST['subject'] ?? 'Nouveau message depuis le site');
     $message = clean($_POST['message'] ?? '');
 
     if ($name === '' || $message === '') {

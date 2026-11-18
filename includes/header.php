@@ -17,7 +17,7 @@ $pageTitle = $pageTitles[$currentPage] ?? (SITE_NAME . ' | ' . SITE_ROLE);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portfolio professionnel d'Ariel Wamba, Ingénieur en Géotechnique et Exploitation Minière au Cameroun. Essais de laboratoire et in situ, dimensionnement, SIG et modélisation minière.">
+    <meta name="description" content="Site officiel d'Ariel Wamba, Ingénieur en Géotechnique et Exploitation Minière au Cameroun. Essais de laboratoire et in situ, dimensionnement, SIG et modélisation minière.">
     <title><?php echo htmlspecialchars($pageTitle); ?></title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -81,6 +81,15 @@ $pageTitle = $pageTitles[$currentPage] ?? (SITE_NAME . ' | ' . SITE_ROLE);
                         </a>
                     </li>
                     <li class="nav-cta-mobile">
+                        <?php if (isLoggedIn()): ?>
+                            <a href="<?php echo SITE_URL; ?>/admin/manage-project.php" class="btn btn-secondary btn-sm" style="margin-bottom: 0.5rem;">
+                                <i class="fas fa-cloud-arrow-up"></i> Publier une réalisation
+                            </a>
+                        <?php else: ?>
+                            <a href="<?php echo SITE_URL; ?>/admin/login.php?redirect=manage-project.php" class="btn btn-secondary btn-sm" style="margin-bottom: 0.5rem;">
+                                <i class="fas fa-right-to-bracket"></i> Se connecter (Admin)
+                            </a>
+                        <?php endif; ?>
                         <a href="<?php echo SITE_URL; ?>/contact.php" class="btn btn-primary btn-sm">
                             <i class="fas fa-paper-plane"></i> Discuter d'un projet
                         </a>
@@ -95,6 +104,15 @@ $pageTitle = $pageTitles[$currentPage] ?? (SITE_NAME . ' | ' . SITE_ROLE);
                         <i class="fas fa-sun icon-sun" aria-hidden="true"></i>
                         <i class="fas fa-moon icon-moon" aria-hidden="true"></i>
                     </button>
+                    <?php if (isLoggedIn()): ?>
+                        <a href="<?php echo SITE_URL; ?>/admin/manage-project.php" class="btn btn-secondary btn-sm nav-cta-desktop" title="Ajouter une réalisation ou une photo">
+                            <i class="fas fa-cloud-arrow-up"></i> Publier
+                        </a>
+                    <?php else: ?>
+                        <a href="<?php echo SITE_URL; ?>/admin/login.php?redirect=manage-project.php" class="btn btn-secondary btn-sm nav-cta-desktop" title="Connexion Administrateur">
+                            <i class="fas fa-right-to-bracket"></i> Connexion
+                        </a>
+                    <?php endif; ?>
                     <a href="<?php echo SITE_URL; ?>/contact.php" class="btn btn-primary btn-sm nav-cta-desktop">
                         Me contacter <i class="fas fa-arrow-up-right-from-square"></i>
                     </a>

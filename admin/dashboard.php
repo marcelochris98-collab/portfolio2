@@ -44,9 +44,9 @@ if ($dbConnected && $pdo) {
                     </span>
                 </a>
                 <div class="nav-actions">
-                    <a href="manage-project.php" class="btn btn-secondary btn-sm"><i class="fas fa-folder-open"></i> Gérer les projets</a>
-                    <a href="<?php echo SITE_URL; ?>/index.php" target="_blank" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-up-right-from-square"></i> Voir le site</a>
-                    <a href="logout.php" class="btn btn-primary btn-sm"><i class="fas fa-power-off"></i> Déconnexion</a>
+                    <a href="manage-project.php" class="btn btn-primary btn-sm"><i class="fas fa-cloud-arrow-up"></i> Publier une réalisation</a>
+                    <a href="<?php echo SITE_URL; ?>/index.php" class="btn btn-secondary btn-sm"><i class="fas fa-house"></i> Retour au site</a>
+                    <a href="logout.php" class="btn btn-secondary btn-sm"><i class="fas fa-power-off"></i> Déconnexion</a>
                 </div>
             </div>
         </nav>
@@ -59,17 +59,20 @@ if ($dbConnected && $pdo) {
                     <span class="section-tag">Espace Administrateur</span>
                     <h1 class="section-title">Bienvenue, <?php echo htmlspecialchars($_SESSION['admin_username'] ?? 'Admin'); ?></h1>
                 </div>
+                <a href="manage-project.php" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Ajouter une réalisation &amp; photo
+                </a>
             </div>
 
             <div class="skills-grid" style="margin-bottom: 3rem;">
                 <div class="skill-card">
                     <div class="skill-card-header">
                         <div class="skill-icon"><i class="fas fa-diagram-project"></i></div>
-                        <span class="skill-index">PROJETS</span>
+                        <span class="skill-index">RÉALISATIONS</span>
                     </div>
                     <h3 style="font-size: 2.5rem; margin-bottom: 0.4rem;"><?php echo $totalProjects; ?></h3>
-                    <p class="skill-desc">Projets et études publiés dans le portfolio.</p>
-                    <a href="manage-project.php" class="btn btn-primary btn-sm">Gérer le catalogue <i class="fas fa-arrow-right"></i></a>
+                    <p class="skill-desc">Réalisations et études publiées sur le site.</p>
+                    <a href="manage-project.php" class="btn btn-primary btn-sm">Gérer &amp; Publier <i class="fas fa-arrow-right"></i></a>
                 </div>
 
                 <div class="skill-card">

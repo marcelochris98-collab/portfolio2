@@ -232,7 +232,7 @@ if ($dbConnected && $pdo) {
                 <h2 class="section-title">Réalisations Récentes</h2>
             </div>
             <a href="<?php echo SITE_URL; ?>/portfolio.php" class="btn btn-secondary">
-                <span>Explorer tout le portfolio</span>
+                <span>Voir toutes mes réalisations</span>
                 <i class="fas fa-arrow-right"></i>
             </a>
         </div>

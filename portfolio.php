@@ -9,7 +9,7 @@ if ($dbConnected && $pdo) {
         $dbRows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         // Vérifier si la BDD contient uniquement les anciens projets web d'exemple ("Site E-commerce", etc.)
-        $genericTitles = ['Site E-commerce', 'Application de Gestion', 'Portfolio Photographe'];
+        $genericTitles = ['Site E-commerce', 'Application de Gestion', 'Site Photographe'];
         $filteredDbRows = [];
         foreach ($dbRows as $row) {
             if (!in_array($row['title'], $genericTitles, true)) {
@@ -42,9 +42,20 @@ function resolveProjectCategory($project) {
 
 <section class="page-header">
     <div class="container" data-reveal="fade-up">
-        <span class="section-tag">Réalisations &amp; Travaux</span>
-        <h1>Portfolio d'Ingénierie</h1>
+        <span class="section-tag">Terrain, Laboratoire &amp; Études</span>
+        <h1>Mes Réalisations</h1>
         <p>Découvrez mes études géotechniques, campagnes d'essais en laboratoire, modélisations minières et suivis de chantiers.</p>
+        <div style="margin-top: 1.5rem;">
+            <?php if (isLoggedIn()): ?>
+                <a href="<?php echo SITE_URL; ?>/admin/manage-project.php" class="btn btn-primary btn-sm">
+                    <i class="fas fa-cloud-arrow-up"></i> Ajouter une réalisation / photo
+                </a>
+            <?php else: ?>
+                <a href="<?php echo SITE_URL; ?>/admin/login.php?redirect=manage-project.php" class="btn btn-secondary btn-sm">
+                    <i class="fas fa-right-to-bracket"></i> Se connecter pour publier
+                </a>
+            <?php endif; ?>
+        </div>
     </div>
 </section>
 
