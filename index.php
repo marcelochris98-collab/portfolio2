@@ -91,13 +91,23 @@ if ($dbConnected && $pdo) {
         <div class="ticker-wrapper">
             <span class="ticker-label"><i class="fas fa-terminal"></i> Écosystème technique :</span>
             <div class="ticker-items">
-                <span class="ticker-chip"><i class="fas fa-bore-hole"></i> Pénétromètre PDL</span>
-                <span class="ticker-chip"><i class="fas fa-flask"></i> Essais Proctor &amp; VBS</span>
-                <span class="ticker-chip"><i class="fas fa-cube"></i> Surpac 3D</span>
-                <span class="ticker-chip"><i class="fas fa-map-location-dot"></i> QGIS &amp; ArcGIS</span>
-                <span class="ticker-chip"><i class="fas fa-building"></i> Autodesk Revit &amp; AutoCAD</span>
-                <span class="ticker-chip"><i class="fas fa-chart-area"></i> Surfer &amp; Geosoft</span>
-                <span class="ticker-chip"><i class="fas fa-code"></i> MATLAB &amp; Arduino</span>
+                <div class="ticker-track">
+                    <span class="ticker-chip"><i class="fas fa-bore-hole"></i> Pénétromètre PDL</span>
+                    <span class="ticker-chip"><i class="fas fa-flask"></i> Essais Proctor &amp; VBS</span>
+                    <span class="ticker-chip"><i class="fas fa-cube"></i> Surpac 3D</span>
+                    <span class="ticker-chip"><i class="fas fa-map-location-dot"></i> QGIS &amp; ArcGIS</span>
+                    <span class="ticker-chip"><i class="fas fa-building"></i> Autodesk Revit &amp; AutoCAD</span>
+                    <span class="ticker-chip"><i class="fas fa-chart-area"></i> Surfer &amp; Geosoft</span>
+                    <span class="ticker-chip"><i class="fas fa-code"></i> MATLAB &amp; Arduino</span>
+                    <!-- Copie pour le défilement continu (droite vers gauche) sur mobile -->
+                    <span class="ticker-chip ticker-dup" aria-hidden="true"><i class="fas fa-bore-hole"></i> Pénétromètre PDL</span>
+                    <span class="ticker-chip ticker-dup" aria-hidden="true"><i class="fas fa-flask"></i> Essais Proctor &amp; VBS</span>
+                    <span class="ticker-chip ticker-dup" aria-hidden="true"><i class="fas fa-cube"></i> Surpac 3D</span>
+                    <span class="ticker-chip ticker-dup" aria-hidden="true"><i class="fas fa-map-location-dot"></i> QGIS &amp; ArcGIS</span>
+                    <span class="ticker-chip ticker-dup" aria-hidden="true"><i class="fas fa-building"></i> Autodesk Revit &amp; AutoCAD</span>
+                    <span class="ticker-chip ticker-dup" aria-hidden="true"><i class="fas fa-chart-area"></i> Surfer &amp; Geosoft</span>
+                    <span class="ticker-chip ticker-dup" aria-hidden="true"><i class="fas fa-code"></i> MATLAB &amp; Arduino</span>
+                </div>
             </div>
         </div>
     </div>

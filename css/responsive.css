@@ -324,6 +324,59 @@ body {
         0%, 100% { transform: translateY(0); }
         50% { transform: translateY(-3px); }
     }
+
+    /* Animation de défilement continu (droite vers gauche) de l'Écosystème technique sur mobile */
+    .tech-ticker {
+        padding: 0.9rem 0;
+        overflow: hidden;
+    }
+
+    .ticker-wrapper {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.65rem;
+        width: 100%;
+    }
+
+    .ticker-items {
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+        mask-image: linear-gradient(to right, transparent 0%, #000 7%, #000 93%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 7%, #000 93%, transparent 100%);
+    }
+
+    .ticker-track {
+        display: flex;
+        flex-wrap: nowrap;
+        width: max-content;
+        gap: 0.65rem;
+        animation: tickerScrollLeft 20s linear infinite;
+        will-change: transform;
+    }
+
+    .ticker-track:hover,
+    .ticker-track:active {
+        animation-play-state: paused;
+    }
+
+    .ticker-dup {
+        display: inline-flex !important;
+    }
+
+    .ticker-chip {
+        flex-shrink: 0;
+        white-space: nowrap;
+    }
+
+    @keyframes tickerScrollLeft {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(calc(-50% - 0.325rem));
+        }
+    }
 }
 
 /* Smartphones (<= 560px) */
@@ -417,34 +470,6 @@ body {
 
     .profile-img {
         height: 295px !important;
-    }
-
-    /* Ruban d'outils défilable horizontalement au doigt */
-    .tech-ticker {
-        padding: 0.85rem 0;
-    }
-
-    .ticker-wrapper {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.6rem;
-    }
-
-    .ticker-items {
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        width: 100%;
-        padding-bottom: 4px;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-    }
-
-    .ticker-items::-webkit-scrollbar {
-        display: none;
-    }
-
-    .ticker-chip {
-        flex-shrink: 0;
     }
 
     /* Filtres de réalisations défilables horizontalement */
